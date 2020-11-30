@@ -91,7 +91,7 @@
 			Httpreq.send(null);
 			return Httpreq.responseText;          
 		}
-		var json_items = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_shopitems.php'));
+		var json_items = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_shopitems.php'));
         var item_descriptions = json_items.data;
         var itemMap = new Map();
         for(var entry of Object.entries(item_descriptions)) {
@@ -99,12 +99,12 @@
             var name = entry[1].itemlong;
             itemMap.set(itemID, name);
         }
-		var json_obj = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_shopstats.php'));
+		var json_obj = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_shopstats.php'));
 		var last_purchases = json_obj.data.LastPurchaseDateTime.data;
 		var purchase_index = [];
-		json_obj = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_karma.php'));
+		json_obj = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_karma.php'));
 		var top_karma = json_obj.data;
-		var player_stats = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php'));
+		var player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php'));
 
 
 		function topTraitorTable(map){
@@ -112,8 +112,8 @@
 			var i = 0;
 			while(i < 10) {
 				var player = map.entries().next().value;
-				var json_player= JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID='+player[0]));
-				var json_kills = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?AccountID='+player[0]));
+				var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player[0]));
+				var json_kills = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?AccountID='+player[0]));
 				var player_kills = json_kills.data;
 				var player_profile = json_player.SteamData;
 				let row = table.insertRow();
@@ -141,7 +141,7 @@
 						traitors.set(entry[1].AccountID, total_kills);
 					}
 				} else {
-					player_stats = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?Page='+(i+1)));
+					player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?Page='+(i+1)));
 					for (var entry of Object.entries(player_stats.data)) {
 						var total_kills = entry[1].killed_innocents + entry[1].killed_detectives;
 						traitors.set(entry[1].AccountID, total_kills);
@@ -156,8 +156,8 @@
 			var i = 0;
 			while(i < 10) {
 				var player = map.entries().next().value;
-				var json_player= JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID='+player[0]));
-				var json_kills = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?AccountID='+player[0]));
+				var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player[0]));
+				var json_kills = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?AccountID='+player[0]));
 				var player_kills = json_kills.data;
 				var player_profile = json_player.SteamData;
 				let row = table.insertRow();
@@ -184,7 +184,7 @@
 						innocents.set(entry[1].AccountID, entry[1].killed_traitors);
 					}
 				} else {
-					player_stats = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?Page='+(i+1)));
+					player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?Page='+(i+1)));
 					for (var entry of Object.entries(player_stats.data)) {
 						innocents.set(entry[1].AccountID, entry[1].killed_traitors);
 					}
@@ -198,8 +198,8 @@
 			var i = 0;
 			while(i < 10) {
 				var player = map.entries().next().value;
-				var json_player= JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID='+player[0]));
-				var json_kills = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?AccountID='+player[0]));
+				var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player[0]));
+				var json_kills = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?AccountID='+player[0]));
 				var player_kills = json_kills.data;
 				var player_profile = json_player.SteamData;
 				let row = table.insertRow();
@@ -236,7 +236,7 @@
 						sleuths.set(entry[1].AccountID, tase_rate);
 					}
 				} else {
-					player_stats = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?Page='+(i+1)));
+					player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?Page='+(i+1)));
 					for (var entry of Object.entries(player_stats.data)) {
 						if(entry[1].scanned_traitors  < 1 || entry[1].scanned_bodies < 1 ){
 							continue;
@@ -260,8 +260,8 @@
 			var i = 0;
 			while(i < 10) {
 				var player = map.entries().next().value;
-				var json_player= JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID='+player[0]));
-				var json_kills = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_stats.php?AccountID='+player[0]));
+				var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player[0]));
+				var json_kills = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?AccountID='+player[0]));
 				var player_kills = json_kills.data;
 				var player_profile = json_player.SteamData;
 				let row = table.insertRow();
