@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>[CLWO] TTT Dashboard</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+
+    <!--Navbar-->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger right show-on-large"><i class="material-icons burger">menu</i></a>
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><span class="logo">CLWO.EU</span></a>
+              	<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="https://clwo.eu/" class="logo"><span class="logo-span">CLWO.EU</span></a></li>
+					<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+					<li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="material-icons left">account_box</i><span>player stats</span></a></li>
+                	<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+					<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+                	<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+					<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+					<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+              	</ul>
+            </div>
+          </nav>
+	</div>
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li><a href="player-profile.html">Player Lookup</a></li>
+		<li><a href="player-leaderboards.html">Player Leaderboards</a></li>
+		<li><a href="staff-team.html">Staff Team</a></li>
+ 	</ul>
+	<!--Sidebar-->
+	<div class="sidebar">
+		<ul class="sidenav" id="mobile-demo">
+			<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+			<li><a href="player-profile.html"><i class="material-icons left">account_box</i><span>player stats</span></a></li>
+			<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+			<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+			<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+			<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+			<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+		  </ul>
+	</div>
+	
+	<div class="container row">
+		<div class="section col m3 hide-on-med-and-down">
+			<div class="card">
+				<img class="responsive-img" src="images/clwologo.png" style="width: 235px; height: 75px; padding-left: 1rem;">
+				<div class="card-content">
+				  <p>THE BE ALL, KNOW SOURCE
+					FOR ALL TTT STATS & INFO!</p>
+				</div>
+				<div class="card-action">
+					<div class="card mobile-button">
+						<img src="images/csgologo.png" alt="" class="responsive-img">
+					</div>
+					<a class="btn mobile-button" href="steam://connect/ttt.clwo.eu:27015" style="margin-left: 2rem;">
+						<i class="material-icons left">launch</i>
+						Join server 
+						<span class="mobile">
+							: <span class="" id="playercount"></span>
+							<span class="" >/24</span>
+						</span>
+					</a>
+				</div>
+				<div class="divider"></div>
+				<footer style="margin-left: 2rem;">
+					<ul>
+						<li><a href="https://clwo.eu/misc.php?action=syndication"><i class="material-icons" style="height: 100%;">rss_feed</i><span>RSS</span></a></li>
+						<li><a href="https://clwo.eu/archive/index.php"><i class="material-icons">reorder</i><span>Lite mode</span></a></li>
+						<li><a href="https://clwo.eu/contact.php"><i class="material-icons">mail</i><span>Contact Us</span></a></li>
+					</ul>
+					<span class="credits" style="margin-left: 5px;">
+						DEVELOPED BY <a href="https://github.com/Tomahawk-99/">TOMAHAWK</a> FOR <a href="https://clwo.eu/">CLWO</a><br>
+						Top Traitor, Top Innocent and Top Slueth inspired by <a href="https://steamcommunity.com/id/IAmFat__/">iamfat</a>
+					</span>
+				</footer>
+			  </div>
+		</div>
+		<div class="section dash col l9 m12">
+			<div class="panel-header">
+				<h2>Quick Glance</h2>
+				<span class="card-subtitle">HERE'S A GLANCE AT What's happened Recently</span>
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="card col l6 s12 left">
+					<div class="card-content center-align">
+						<span class="table-header">Latest Purchases</span>
+						<table id="latestPurchases" class="highlight">
+							<tbody id="purchaseData"></tbody>
+						</table>
+					</div>
+					<div class="card-action center-align" style="border-top: none;">
+						<a class="btn-flat more_info" href="shop-stats.html" style="padding-left: 1rem; margin: auto">
+							More shop stats
+						</a>
+					</div>
+				</div>
+				<div class="card col l6 s12 left">
+					<div class="card-content center-align">
+						<span class="table-header">Top Active Players</span>
+						<table id="karmaLeaderboard" class="highlight">
+							<tbody id="karmaData"></tbody>
+						</table>
+					</div>
+					<div class="card-action center-align" style="border-top: none;">
+						<a class="btn-flat more_info" href="player-profile.html" style="padding-left: 1rem; margin: auto">
+							More player stats
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/auto-init.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	function Get(yourUrl){
+		var Httpreq = new XMLHttpRequest(); // a new request
+		Httpreq.open("GET",yourUrl,false);
+		Httpreq.send(null);
+		return Httpreq.responseText;          
+	}
+	
+	var json_items = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_shopitems.php'));
+    var item_descriptions = json_items.data;
+    var itemMap = new Map();
+    for(var entry of Object.entries(item_descriptions)) {
+        var itemID = entry[1].itemshort;
+        var name = entry[1].itemlong;
+        itemMap.set(itemID, name);
+    }
+	var json_obj = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_shopstats.php'));
+	var last_purchases = json_obj.data.LastPurchaseDateTime.data;
+	var purchase_index = [];
+	json_obj = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_karma.php'));
+	var top_karma = json_obj.data;
+	var player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php'));
+
+	function lastPurchasesTable() {
+		var d = new Date();
+		var n = d.getTimezoneOffset();
+		for (var item in last_purchases) {
+				purchase_index.push(item);
+		}
+		const table = document.getElementById("purchaseData");
+		var i;
+		for(i=0; i<8; i++) {
+			var key = purchase_index[i];
+			let row = table.insertRow();
+			let item = row.insertCell(0);
+			item.innerHTML = itemMap.get(key);
+			let time = row.insertCell(1);
+			var purchase_time = String(Number(last_purchases[key].substring(11, 13))+1)+last_purchases[key].substring(13, 16);
+			time.innerHTML = purchase_time;
+		}
+	}
+
+	function topPlayers(map){
+		const table = document.getElementById("karmaData");
+		for(var i = 0; i < 8; i++) {
+			var player = map.entries().next().value;
+			var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player[0]));
+			var player_profile = json_player.SteamData;
+			let row = table.insertRow();
+			let pfp = row.insertCell(0);
+			pfp.innerHTML = '<img src="'+player_profile.avatarfull+'" alt="" width="30px" height="30px">';
+			let account = row.insertCell(1);
+			account.innerHTML = '<a href="'+player_profile.profileurl+'" class="truncate" style="padding-left: 5px;">'+player_profile.personaname+'</a>';
+			let rating = row.insertCell(2);
+			rating.innerHTML = +Math.round(player[1])+' player rating';
+			map.delete(player[0]);
+		}
+	}
+
+	function getTopPlayers(){
+		let karmaGain = new Map();
+		const max_pages = player_stats.pagination.max_pages;
+		var i = 0;
+	 	for(i; i<max_pages;i++) {
+			 if (i==0) {
+				 for (var entry of Object.entries(player_stats.data)) {
+					if(entry[1].rounds_played < 50) {
+						continue;
+					}
+					var round_rating = getRoundRating(entry[1]);
+					var damage_rating = getDamageRating(entry[1]);
+					var kill_rating = getKillRating(entry[1]);
+					var sleuth_rating = getSleuthRating(entry[1]);
+					var player_rating = round_rating+damage_rating+kill_rating+sleuth_rating;
+					if(isNaN(player_rating)) {
+						continue;
+					}
+					karmaGain.set(entry[1].AccountID, player_rating);
+				}
+			} else {
+				player_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?Page='+(i+1)));
+				for (var entry of Object.entries(player_stats.data)) {
+					if(entry[1].rounds_played < 50) {
+						continue;
+					}
+					var round_rating = getRoundRating(entry[1]);
+					var damage_rating = getDamageRating(entry[1]);
+					var kill_rating = getKillRating(entry[1]);
+					var sleuth_rating = getSleuthRating(entry[1]);
+					var player_rating = round_rating+damage_rating+kill_rating+sleuth_rating;
+					if(isNaN(player_rating)) {
+						continue;
+					}
+					karmaGain.set(entry[1].AccountID, player_rating);
+				}
+			}
+		}
+
+		function getRoundRating(player_data) {
+			return (((player_data.rounds_won/player_data.rounds_played)+(player_data.played_as_detective/player_data.rounds_played))*100);
+		}
+
+		function getDamageRating(player_data) {
+			return ((player_data.damage_given-player_data.bad_damage_given)/player_data.shots_fired)+((player_data.damage_taken+(player_data.bad_damage_taken/2))/1000);
+		}
+
+		function getKillRating(player_data){
+			return ((((player_data.killed_innocents*2)+(player_data.killed_traitors*5)+(player_data.killed_detectives*3))*(1-getRdmPercent(player_data)))/10);
+		}
+
+		function getRdmPercent(player_data){
+			return player_data.bad_kills /(player_data.killed_innocents + player_data.killed_traitors + player_data.killed_detectives);
+		}
+
+		function getSleuthRating(player_data) {
+			return ((player_data.identified_bodies/1000)+(player_data.identified_bodies/1000)+(player_data.identified_traitors/player_data.identified_bodies)+(player_data.scanned_traitors/player_data.scanned_bodies))*100;
+		}
+
+		return getMaxKarma(karmaGain);
+	}
+
+	function getMaxKarma(karmaGain) {
+		var map = karmaGain;
+		var top10 = new Map();
+		while(top10.size < 10) {
+			var max = map.entries().next().value;
+			for(let [k,v] of map) {
+				if(v > max[1]) {
+					max = [k, v];
+				}
+			}
+			map.delete(max[0]);
+			top10.set(max[0], max[1]);
+		}
+		return top10;
+	}
+
+	lastPurchasesTable();
+	topPlayers(getTopPlayers());
+	</script>
+	<script type="text/javascript" src="js/player-count.js"></script>
+	
+    </body>
+  
+</html>

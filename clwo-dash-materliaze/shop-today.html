@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>[CLWO] TTT Dashboard</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+
+    <!--Navbar-->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger right show-on-large"><i class="material-icons burger">menu</i></a>
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><span class="logo">CLWO.EU</span></a>
+              	<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="https://clwo.eu/" class="logo"><span class="logo-span">CLWO.EU</span></a></li>
+					<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+					<li><a href="player-profile.html"><i class="material-icons left">account_box</i><span>player profile</span></a></li>
+                	<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+					<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+                	<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+					<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+					<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+              	</ul>
+            </div>
+          </nav>
+	</div>
+	
+	<!--Sidebar-->
+	<div class="sidebar">
+		<ul class="sidenav" id="mobile-demo">
+			<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+			<li><a href="player-profile.html"><i class="material-icons left">account_box</i><span>player profile</span></a></li>
+			<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+			<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+			<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+			<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+			<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+		  </ul>
+	</div>
+
+	<div class="container row" style="border: 1px solid rgba(160, 160, 160, 0.3); background-color: white; padding-bottom: 1em;">
+		<ul id="tabs-swipe-demo" class="tabs">
+			<li class="tab col s4"><a class="active" href="#inno">Innocent</a></li>
+			<li class="tab col s4"><a class="active" href="#traitor">Traitor</a></li>
+			<li class="tab col s4"><a class="active" href="#detective">Detective</a></li>
+		</ul>
+		<div id="inno" class="col s12 center-align" style="height: 80vh; padding-top: 4em;">
+			<div class="chart" id="innoChart"></div>
+        </div>
+        <div id="traitor" class="col s12 center-align" style="height: 80vh; padding-top: 4em;">
+			<div class="chart" id="traitorChart"></div>
+        </div>
+        <div id="detective" class="col s12 center-align" style="height: 80vh; padding-top: 4em;">
+			<div class="chart" id="detChart"></div>
+		</div>
+	</div>
+	
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/auto-init.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+                function Get(yourUrl){
+                    var Httpreq = new XMLHttpRequest(); // a new request
+                    Httpreq.open("GET",yourUrl,false);
+                    Httpreq.send(null);
+                    return Httpreq.responseText;          
+                }
+
+                var json_obj = JSON.parse(Get('https://clwo.eu/jailbreak/api/v2/ttt_shopstats.php'));
+                var innoItems = json_obj.data.TotalPurchases.data.LastDay.TTT_TEAM_INNOCENT;
+                var traitorItems= json_obj.data.TotalPurchases.data.LastDay.TTT_TEAM_TRAITOR;
+                var detectiveItems = json_obj.data.TotalPurchases.data.LastDay.TTT_TEAM_DETECTIVE;
+                var itemsArr = new Array(0);
+
+                google.charts.load("current", {packages:["corechart", "bar"]});
+                google.charts.setOnLoadCallback(drawChartInnocent);
+				google.charts.setOnLoadCallback(drawChartTraitor);
+				google.charts.setOnLoadCallback(drawChartDetective);
+
+				function addDataRows(jsonData, dataTable){
+                    for (var key of Object.keys(jsonData)) {
+                        itemsArr.push(key);
+                        itemsArr.push(jsonData[key]);
+                        dataTable.addRow(itemsArr);
+                        itemsArr.length = 0;
+                    }
+                }
+
+                function drawChartInnocent() {
+                    var innoData = new google.visualization.DataTable();
+                    innoData.addColumn('string', 'Item');
+                    innoData.addColumn('number', 'Purchases');
+                    addDataRows(innoItems, innoData);
+                    var options = {
+                    //theme: 'material',
+                    is3D: true,
+                    colors: ['green'],
+                    //sliceVisibilityThreshold: .02,
+                    legend: { position: 'none'}
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('innoChart'));
+                    innoData.sort([{column: 1, desc: true}]);
+                    chart.draw(innoData, options);
+                }
+
+                function drawChartTraitor() {
+                    var traitorData = new google.visualization.DataTable();
+                    traitorData.addColumn('string', 'Item');
+                    traitorData.addColumn('number', 'Purchases');
+                    addDataRows(traitorItems, traitorData);
+                    var options = {
+                    //theme: 'material',
+                    colors: ['red'],
+                    is3D: true,
+                    //sliceVisibilityThreshold: .015,
+                    legend: { position: 'none'}
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('traitorChart'));
+                    traitorData.sort([{column: 1, desc: true}]);
+                    chart.draw(traitorData, options);
+                }
+
+                function drawChartDetective() {
+                    var detectiveData = new google.visualization.DataTable();
+                    detectiveData.addColumn('string', 'Item');
+                    detectiveData.addColumn('number', 'Purchases');
+                    addDataRows(detectiveItems, detectiveData);
+                    var options = {
+                    //theme: 'material',
+                    colors: ['blue'],
+                    is3D: true,
+                    //sliceVisibilityThreshold: .015,
+                    legend: { position: 'none'}
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('detChart'));
+                    detectiveData.sort([{column: 1, desc: true}]);
+                    chart.draw(detectiveData, options);
+                }
+                
+                function resize () {
+                    drawChartInnocent();
+                    drawChartTraitor();
+                    drawChartDetective();
+                }
+
+                window.onload = resize;
+                window.onresize = resize;
+            </script>
+    </body>
+  
+</html>

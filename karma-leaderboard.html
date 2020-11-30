@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>[CLWO] TTT Dashboard</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+
+    <!--Navbar-->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger right show-on-large"><i class="material-icons burger">menu</i></a>
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><span class="logo">CLWO.EU</span></a>
+              	<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="https://clwo.eu/" class="logo"><span class="logo-span">CLWO.EU</span></a></li>
+					<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+					<li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="material-icons left">account_box</i><span>player stats</span></a></li>
+                	<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+					<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+                	<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+					<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+					<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+              	</ul>
+            </div>
+          </nav>
+	</div>
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li><a href="player-profile.html">Player Lookup</a></li>
+		<li><a href="player-leaderboards.html">Player Leaderboards</a></li>
+		<li><a href="staff-team.html">Staff Team</a></li>
+ 	</ul>
+	<!--Sidebar-->
+	<div class="sidebar">
+		<ul class="sidenav" id="mobile-demo">
+			<li><a href="index.html"><i class="material-icons left">dashboard</i><span>QUICK DASH</span></a></li>
+			<li><a href="player-profile.html"><i class="material-icons left">account_box</i><span>player stats</span></a></li>
+			<li><a href="karma-leaderboard.html"><i class="material-icons left">grade</i><span>KARMA LEADERBOARD</span></a></li>
+			<li><a href="shop-stats.html"><i class="material-icons left">shopping_cart</i><span>SHOP STATS</span></a></li>
+			<li><a href="https://staff.aimless.eu/cases/"><i class="material-icons left">trending_up</i><span>RDM CASE TRACKER</span></a></li>
+			<li><a href="https://clwo.eu/forum-38.html"><i class="material-icons left">forum</i><span>TTT FORUMS</span=></a></li>
+			<li><a href="https://clwo.eu/ttt/sourcebans/"><i class="material-icons left">gavel</i><span>TTT bans</span=></a></li>
+		  </ul>
+	</div>
+
+	<div id="karma-html" class="container row" style="border: 1px solid rgba(160, 160, 160, 0.3); background-color: white; margin-bottom: 0 !important; height: auto;">
+		<div class="section col s12" style="height: 825px;">
+			<div class="panel-header" style="padding-left: 1em;">
+				<h2 style="margin-top: 1rem;">From ritz to rubble</h2>
+				<span class="card-subtitle">A total ranking of active player's karma</span>
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="card col s12 left">
+					<div class="card-content center-align">
+						<table id="topLeaderboard" class="highlight">
+							<tbody id="karmaData"></tbody>
+						</table>
+					</div>
+					<div class="card-action center-align" style="border-top: none;">
+						<ul class="pagination">
+							<li class="waves-effect"><a href="javascript:prevPage()" id="btn_prev" class="disabled"><i class="material-icons">chevron_left</i></a></li>
+							<li class="waves-effect"><a href="javascript:nextPage()" id="btn_next" ><i class="material-icons">chevron_right</i></a></li>
+						  </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/auto-init.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		function Get(yourUrl){
+			var Httpreq = new XMLHttpRequest(); // a new request
+			Httpreq.open("GET",yourUrl,false);
+			Httpreq.send(null);
+			return Httpreq.responseText;          
+		}
+
+		var api_data = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_karma.php?MaxPerPage=10&&Page=1'));
+		var max_pages = api_data.pagination.max_pages;
+		var current_page = 1;
+
+		function prevPage()
+		{
+			if (current_page > 1) {
+				current_page--;
+				changePage(current_page);
+			}
+		}
+
+		function nextPage()
+		{
+			if (current_page < max_pages) {
+				current_page++;
+				changePage(current_page);
+			}
+		}
+
+		function changePage(page)
+		{
+			var btn_next = document.getElementById("btn_next");
+			var btn_prev = document.getElementById("btn_prev");
+		
+			// Validate page
+			if (page < 1) page = 1;
+			if (page > max_pages) page = max_pages;
+
+			if (page == 1) {
+				btn_next.classList.add = "disabled";
+			} else {
+				btn_next.classList.remove = "disabled";
+			}
+
+			if (page == max_pages) {
+				btn_next.classList.add = "disabled waves-effect";
+			} else {
+				btn_next.classList.remove = "disabled";
+			}
+			topKarmaTable(current_page);
+		}
+
+		window.onload = function() {
+			changePage(1);
+		};
+		
+		var counter = 0;
+		function topKarmaTable(page){
+			destoryOld();
+			
+			var json_obj = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_karma.php?MaxPerPage=10&&Page='+page));
+			var top_karma = json_obj.data;
+			const table = document.getElementById("karmaData");
+
+			for(var i = 0; i < json_obj.results; i++) {
+				var player = top_karma[i];
+				var json_player= JSON.parse(Get('https://clwo.eu/community/api/v2/accounthelper.php?AccountID='+player.AccountID));
+				var json_stats = JSON.parse(Get('https://clwo.eu/community/api/v2/ttt_stats.php?AccountID='+player.AccountID));
+				var player_data = json_stats.data;
+				var player_profile = json_player.SteamData;
+				let row = table.insertRow();
+				let placement = row.insertCell(0);
+				placement.innerHTML = counter+1 + ".";
+				let pfp = row.insertCell(1);
+				pfp.innerHTML = '<img src="'+player_profile.avatarfull+'" alt="" width="30px" height="30px">';
+				let account = row.insertCell(2);
+				account.innerHTML = '<a href="'+player_profile.profileurl+'" class="truncate" style="padding-left: 5px;">'+player_profile.personaname+'</a>';
+				let karma = row.insertCell(3);
+				karma.innerHTML = player.Karma;
+				let rdm_percent = row.insertCell(4);
+				if(Object.keys(json_stats.data).length === 0){
+					rdm_percent.innerHTML = 'N/A';
+				} else {
+					rdm_percent.innerHTML = getRdmPercent()+'% RDM';
+				}
+				counter += 1;
+			}
+
+			function getRdmPercent(){
+				var percent = (player_data[0].bad_kills /(player_data[0].killed_innocents + player_data[0].killed_traitors + player_data[0].killed_detectives))*100;
+				if (percent < 1) {
+					return Math.round(percent*10) / 10;
+				} else {
+					return Math.round(percent);
+				}
+			}
+
+			function destoryOld(){
+				const table = document.getElementById("karmaData");
+				table.innerHTML="";
+			}
+		}
+
+		</script>
+    </body>
+  
+</html>
